@@ -5,6 +5,7 @@ class Pet {
     this.energy = 50;
     this.hunger = 50;
     this.happiness = 50;
+
     //NOTE:
     this.element = null;
     this.decayInterval = null;
