@@ -1,16 +1,7 @@
-let activePet;
+const pets = [new Dog("Emilio"), new Cat("Lilli"), new Fish("Bubbles")];
 
-// Moderne Event-Bindung statt inline onclick
 window.addEventListener("DOMContentLoaded", () => {
-  const rex = new Dog("Emilio");
-  const lilli = new Cat("Lilli");
-  const berti = new Fish("Berti");
-
-  activePet = rex;
-
-  activePet.updateUI();
-
-  document.getElementById("feed-btn").addEventListener("click", () => activePet.eat());
-  document.getElementById("play-btn").addEventListener("click", () => activePet.play());
-  document.getElementById("sleep-btn").addEventListener("click", () => activePet.sleep());
+  const container = document.getElementById("pets-container");
+  container.classList.add("pets-grid");
+  pets.forEach(pet => pet.render(container));
 });

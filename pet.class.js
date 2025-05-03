@@ -5,15 +5,41 @@ class Pet {
     this.energy = 50;
     this.hunger = 50;
     this.happiness = 50;
-    // this.updateUI();
+    this.element = null;
+  }
+
+  render(container) {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+    <img src="${this.image}" alt="${this.name}" class="pet-image" />
+      <h2>${this.name}</h2>
+      <div class="status">
+        <p><strong>Energie:</strong> <span class="energy">${this.energy}</span></p>
+        <p><strong>Hunger:</strong> <span class="hunger">${this.hunger}</span></p>
+        <p><strong>Laune:</strong> <span class="happiness">${this.happiness}</span></p>
+      </div>
+      <div class="controls">
+        <button class="feed-btn">🦴 Füttern</button>
+        <button class="play-btn">🎾 Spielen</button>
+        <button class="sleep-btn">😴 Schlafen</button>
+      </div>
+    `;
+
+    this.element = card;
+    container.appendChild(card);
+
+    card.querySelector(".feed-btn").addEventListener("click", () => this.eat());
+    card.querySelector(".play-btn").addEventListener("click", () => this.play());
+    card.querySelector(".sleep-btn").addEventListener("click", () => this.sleep());
   }
 
   updateUI() {
-    document.getElementById("pet-name").textContent = this.name;
-    document.getElementById("energy").textContent = this.energy;
-    document.getElementById("hunger").textContent = this.hunger;
-    document.getElementById("happiness").textContent = this.happiness;
-    document.getElementById("pet-image").src = this.image;
+    if (!this.element) return;
+    this.element.querySelector(".energy").textContent = this.energy;
+    this.element.querySelector(".hunger").textContent = this.hunger;
+    this.element.querySelector(".happiness").textContent = this.happiness;
   }
 
   eat() {

@@ -45,3 +45,10 @@ body {
 .status p {
   margin: 0.5rem 0;
 }
+
+.pets-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
