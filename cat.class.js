@@ -4,7 +4,7 @@ class Cat extends Pet {
   }
 
   eat() {
-    this.logAction(`${this.name} frisst sein Lieblingsfutter 🥛`);
+    this.logAction(`${this.name} frisst ihr Lieblingsfutter 🥛`);
     super.eat();
   }
 

@@ -11,6 +11,7 @@ class Pet {
   }
 
   render(container) {
+    this.loadState();
     const card = document.createElement("div");
     card.className = "card";
 
@@ -35,11 +36,14 @@ class Pet {
     this.element = card;
     container.appendChild(card);
 
+    //Reihenfolge damit Balken auch beim Neuladen richtig angezeit werden:
+    this.loadState();
+    this.updateUI();
+    this.startDecay();
+
     card.querySelector(".feed-btn").addEventListener("click", () => this.eat());
     card.querySelector(".play-btn").addEventListener("click", () => this.play());
     card.querySelector(".sleep-btn").addEventListener("click", () => this.sleep());
-
-    this.startDecay();
   }
 
   //NOTE:
@@ -50,13 +54,33 @@ class Pet {
   }
 
   //NOTE:
+  //   startDecay() {
+  //     this.decayInterval = setInterval(() => {
+  //       this.energy = Math.max(0, this.energy - 1);
+  //       this.hunger = Math.min(100, this.hunger + 1);
+  //       this.happiness = Math.max(0, this.happiness - 0.5);
+  //       this.updateUI();
+  //     }, 5000); // alle 5 Sekunden
+  //   }
+
+  //NEU:
   startDecay() {
     this.decayInterval = setInterval(() => {
       this.energy = Math.max(0, this.energy - 1);
       this.hunger = Math.min(100, this.hunger + 1);
       this.happiness = Math.max(0, this.happiness - 0.5);
+
+      if (this.energy === 0) {
+        this.logAction(`${this.name} ist vor Erschöpfung gestorben. 💀`);
+        clearInterval(this.decayInterval);
+        if (this.element) {
+          this.element.classList.add("dead");
+          this.element.querySelector(".controls").remove();
+        }
+      }
+
       this.updateUI();
-    }, 5000); // alle 5 Sekunden
+    }, 3000);
   }
 
   //NEU:
@@ -128,13 +152,15 @@ class Pet {
     happinessBar.querySelector(".bar-value").textContent = Math.round(this.happiness);
 
     this.element.querySelector(".status-text").textContent = this.getStatusText();
+
+    this.saveState();
   }
 
   getStatusText() {
     if (this.energy < 30) return `😴 ${this.name} ist sehr müde.`;
     if (this.hunger > 70) return `🍽️ ${this.name} hat großen Hunger.`;
     if (this.happiness > 80) return `😻 ${this.name} ist super gelaunt!`;
-    return `🙂 ${this.name} geht es okay.`;
+    return `🙂 ${this.name} geht es gut.`;
   }
 
   eat() {
@@ -156,5 +182,25 @@ class Pet {
     this.hunger = Math.min(100, this.hunger + 10);
 
     this.updateUI();
+  }
+
+  //NOTE: Neu Local Storage!
+  saveState() {
+    const data = {
+      energy: this.energy,
+      hunger: this.hunger,
+      happiness: this.happiness,
+    };
+    localStorage.setItem(`pet-${this.name}`, JSON.stringify(data));
+  }
+
+  loadState() {
+    const saved = localStorage.getItem(`pet-${this.name}`);
+    if (saved) {
+      const data = JSON.parse(saved);
+      this.energy = data.energy;
+      this.hunger = data.hunger;
+      this.happiness = data.happiness;
+    }
   }
 }

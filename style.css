@@ -133,3 +133,8 @@ body {
 .happiness-bar {
   background-color: var(--happiness-color);
 }
+
+.dead {
+  opacity: 0.4;
+  filter: grayscale(100%);
+}
