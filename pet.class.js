@@ -5,7 +5,7 @@ class Pet {
     this.energy = 50;
     this.hunger = 50;
     this.happiness = 50;
-    this.updateUI();
+    // this.updateUI();
   }
 
   updateUI() {
