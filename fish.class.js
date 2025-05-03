@@ -1,1 +1,1 @@
-class Fish extends Pet
+class Fish extends Pet {}

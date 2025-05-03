@@ -1,1 +1,1 @@
-class Cat extends Pet
+class Cat extends Pet {}
