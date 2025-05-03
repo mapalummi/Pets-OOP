@@ -4,17 +4,17 @@ class Fish extends Pet {
   }
 
   eat() {
-    this.logAction(`${this.name} frisst Flockenfutter. 🐟`);
+    this.logAction(`${this.name} frisst Flockenfutter 🐟`);
     super.eat();
   }
 
   play() {
-    this.logAction(`${this.name} schwimmt durch einen Reifen. 🪱`);
+    this.logAction(`${this.name} schwimmt durch einen Reifen 🪱`);
     super.play();
   }
 
   sleep() {
-    this.logAction(`${this.name} ruht sich am Boden des Aquariums aus.`);
+    this.logAction(`${this.name} ruht sich am Boden des Aquariums aus`);
     super.sleep();
   }
 }
