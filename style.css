@@ -58,3 +58,78 @@ body {
   justify-content: center;
   gap: 1rem;
 }
+
+/* Statusbar-Anzeige */
+/* .bar-container {
+  margin-bottom: 5px;
+}
+.bar {
+  width: 100%;
+  height: 12px;
+  background: #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  background: green;
+  transition: width 0.3s ease;
+}
+.energy-bar {
+  background: #4caf50;
+}
+.hunger-bar {
+  background: #f44336;
+}
+.happiness-bar {
+  background: #2196f3;
+} */
+
+/* NEU */
+.bar-container {
+  margin-bottom: 1rem;
+}
+
+.bar-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.bar {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  background-color: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background-color: #4caf50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* Balkenfarben */
+.bar-fill {
+  transition: width 0.3s, background-color 0.3s;
+}
+
+.energy-bar {
+  background-color: var(--energy-color);
+}
+
+.hunger-bar {
+  background-color: var(--hunger-color);
+}
+
+.happiness-bar {
+  background-color: var(--happiness-color);
+}
