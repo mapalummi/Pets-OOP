@@ -46,6 +46,12 @@ body {
   margin: 0.5rem 0;
 }
 
+.status-text {
+  margin-top: 1rem;
+  font-style: italic;
+  color: #555;
+}
+
 .pets-grid {
   display: flex;
   flex-wrap: wrap;
