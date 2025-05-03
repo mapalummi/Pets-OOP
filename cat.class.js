@@ -4,17 +4,17 @@ class Cat extends Pet {
   }
 
   eat() {
-    console.log(`${this.name} frisst sein Lieblingsfutter`);
+    this.logAction(`${this.name} frisst sein Lieblingsfutter`);
     super.eat();
   }
 
   play() {
-    console.log(`${this.name} spielt mit einem Wollknäuel! 🧶`);
+    this.logAction(`${this.name} spielt mit einem Wollknäuel! 🧶`);
     super.play();
   }
 
   sleep() {
-    console.log(`${this.name} schläft auf dem Fensterbrett. 💤`);
+    this.logAction(`${this.name} schläft auf dem Fensterbrett. 💤`);
     super.sleep();
   }
 }

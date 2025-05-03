@@ -4,17 +4,17 @@ class Dog extends Pet {
   }
 
   eat() {
-    console.log(`${this.name} frisst sein Lieblingsfutter`);
+    this.logAction(`${this.name} frisst sein Lieblingsfutter.`);
     super.eat();
   }
 
   play() {
-    console.log(`${this.name} jagt einen Ball 🐶`);
+    this.logAction(`${this.name} jagt einen Ball 🐶`);
     super.play();
   }
 
   sleep() {
-    console.log(`${this.name} schläft auf der Couch`);
+    this.logAction(`${this.name} schläft auf der Couch.`);
     super.sleep();
   }
 }

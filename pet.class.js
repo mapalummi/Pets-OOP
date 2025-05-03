@@ -15,20 +15,21 @@ class Pet {
     card.className = "card";
 
     card.innerHTML = `
-    <img src="${this.image}" alt="${this.name}" class="pet-image" />
-    <h2>${this.name}</h2>
-    <div class="status">
-      <p><strong>Energie:</strong> <span class="energy">${this.energy}</span></p>
-      <p><strong>Hunger:</strong> <span class="hunger">${this.hunger}</span></p>
-      <p><strong>Laune:</strong> <span class="happiness">${this.happiness}</span></p>
-      <p class="status-text">${this.getStatusText()}</p>
-    </div>
-    <div class="controls">
-      <button class="feed-btn">🦴 Füttern</button>
-      <button class="play-btn">🎾 Spielen</button>
-      <button class="sleep-btn">😴 Schlafen</button>
-    </div>
-  `;
+      <img src="${this.image}" alt="${this.name}" class="pet-image" />
+      <h2>${this.name}</h2>
+      <div class="status">
+        <p><strong>Energie:</strong> <span class="energy">${this.energy}</span></p>
+        <p><strong>Hunger:</strong> <span class="hunger">${this.hunger}</span></p>
+        <p><strong>Laune:</strong> <span class="happiness">${this.happiness}</span></p>
+        <p class="status-text">${this.getStatusText()}</p>
+        <p class="action-log"></p>
+      </div>
+      <div class="controls">
+        <button class="feed-btn">🦴 Füttern</button>
+        <button class="play-btn">🎾 Spielen</button>
+        <button class="sleep-btn">😴 Schlafen</button>
+      </div>
+    `;
 
     //NOTE:
     this.element = card;
@@ -42,13 +43,20 @@ class Pet {
   }
 
   //NOTE:
+  logAction(text) {
+    if (!this.element) return;
+    const log = this.element.querySelector(".action-log");
+    log.textContent = text;
+  }
+
+  //NOTE:
   startDecay() {
     this.decayInterval = setInterval(() => {
       this.energy = Math.max(0, this.energy - 1);
       this.hunger = Math.min(100, this.hunger + 1);
       this.happiness = Math.max(0, this.happiness - 0.5);
       this.updateUI();
-    }, 3000); // alle 3 Sekunden
+    }, 5000); // alle 5 Sekunden
   }
 
   updateUI() {
@@ -69,18 +77,21 @@ class Pet {
   eat() {
     this.hunger = Math.max(0, this.hunger - 20);
     this.energy = Math.min(100, this.energy + 10);
+
     this.updateUI();
   }
 
   play() {
     this.happiness = Math.min(100, this.happiness + 15);
     this.energy = Math.max(0, this.energy - 10);
+
     this.updateUI();
   }
 
   sleep() {
     this.energy = Math.min(100, this.energy + 30);
     this.hunger = Math.min(100, this.hunger + 10);
+
     this.updateUI();
   }
 }
