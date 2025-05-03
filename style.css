@@ -138,3 +138,30 @@ body {
   opacity: 0.4;
   filter: grayscale(100%);
 }
+
+.revive-btn {
+  display: none; /* Standardmäßig ausgeblendet */
+  background-color: #ff4081; /* Auffällige Farbe */
+  color: white;
+  border: none;
+  border-radius: 6px; /* Leicht abgerundete Ecken */
+  padding: 8px 16px; /* Kleinere Größe */
+  font-size: 14px; /* Kleinere Schriftgröße */
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin: 10px auto; /* Abstand und zentrieren */
+  display: block; /* Block-Element für zentrierte Ausrichtung */
+  text-align: center;
+}
+
+.revive-btn:hover {
+  transform: scale(1.05); /* Leichtes Vergrößern beim Hover */
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.3);
+}
+
+.revive-btn:active {
+  transform: scale(0.95); /* Leichtes Verkleinern beim Klicken */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

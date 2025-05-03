@@ -8,6 +8,8 @@ class Pet {
     //NOTE:
     this.element = null;
     this.decayInterval = null;
+
+    this.loadState();
   }
 
   render(container) {
@@ -30,20 +32,32 @@ class Pet {
     <button class="play-btn">🎾 Spielen</button>
     <button class="sleep-btn">😴 Schlafen</button>
   </div>
+  <button class="revive-btn" style="display: none;">💖 Wiederbeleben 💖</button>
 `;
 
     //NOTE:
     this.element = card;
     container.appendChild(card);
 
+    card.querySelector(".feed-btn").addEventListener("click", () => this.eat());
+    card.querySelector(".play-btn").addEventListener("click", () => this.play());
+    card.querySelector(".sleep-btn").addEventListener("click", () => this.sleep());
+
+    const reviveBtn = card.querySelector(".revive-btn");
+
+    //NEUE Funktion:
+    if (reviveBtn) {
+      reviveBtn.addEventListener("click", () => this.revive());
+      // Zeige den Button nur, wenn das Tier gestorben ist
+      if (this.energy === 0) {
+        reviveBtn.style.display = "block";
+      }
+    }
+
     //Reihenfolge damit Balken auch beim Neuladen richtig angezeit werden:
     this.loadState();
     this.updateUI();
     this.startDecay();
-
-    card.querySelector(".feed-btn").addEventListener("click", () => this.eat());
-    card.querySelector(".play-btn").addEventListener("click", () => this.play());
-    card.querySelector(".sleep-btn").addEventListener("click", () => this.sleep());
   }
 
   //NOTE:
@@ -63,7 +77,28 @@ class Pet {
   //     }, 5000); // alle 5 Sekunden
   //   }
 
-  //NEU:
+  //Vorher:
+  //   startDecay() {
+  //     this.decayInterval = setInterval(() => {
+  //       this.energy = Math.max(0, this.energy - 1);
+  //       this.hunger = Math.min(100, this.hunger + 1);
+  //       this.happiness = Math.max(0, this.happiness - 0.5);
+
+  //       if (this.energy === 0) {
+  //         this.logAction(`${this.name} ist vor Erschöpfung gestorben. 💀`);
+  //         clearInterval(this.decayInterval);
+  //         if (this.element) {
+  //           this.element.classList.add("dead");
+  //           this.element.querySelector(".controls").remove();
+  //         }
+  //       }
+
+  //       this.updateUI();
+  //       this.saveState();
+  //     }, 3000);
+  //   }
+
+  //NEU
   startDecay() {
     this.decayInterval = setInterval(() => {
       this.energy = Math.max(0, this.energy - 1);
@@ -71,16 +106,68 @@ class Pet {
       this.happiness = Math.max(0, this.happiness - 0.5);
 
       if (this.energy === 0) {
-        this.logAction(`${this.name} ist vor Erschöpfung gestorben. 💀`);
-        clearInterval(this.decayInterval);
-        if (this.element) {
-          this.element.classList.add("dead");
-          this.element.querySelector(".controls").remove();
-        }
+        this.handleDeath();
       }
 
       this.updateUI();
+      this.saveState();
     }, 3000);
+  }
+
+  //NEU:
+  handleDeath() {
+    this.logAction(`${this.name} ist vor Erschöpfung gestorben. 💀`);
+    clearInterval(this.decayInterval); // Stoppe den Intervall
+    if (this.element) {
+      this.element.classList.add("dead");
+      const controls = this.element.querySelector(".controls");
+      if (controls) controls.remove(); // Entferne die Steuerung
+
+      // Zeige den "Wiederbeleben"-Button
+      const reviveBtn = this.element.querySelector(".revive-btn");
+      if (reviveBtn) {
+        reviveBtn.style.display = "block";
+      }
+    }
+  }
+
+  //NOTE: NEUE Funktion
+  revive() {
+    if (this.energy === 0) {
+      this.energy = 50; // Setze Standardwerte
+      this.hunger = 50;
+      this.happiness = 50;
+
+      if (this.element) {
+        this.element.classList.remove("dead"); // Entferne den "toten" Zustand
+        const controls = this.element.querySelector(".controls");
+        if (!controls) {
+          // Falls die Steuerung entfernt wurde, füge sie wieder hinzu
+          const controlsDiv = document.createElement("div");
+          controlsDiv.className = "controls";
+          controlsDiv.innerHTML = `
+            <button class="feed-btn">🦴 Füttern</button>
+            <button class="play-btn">🎾 Spielen</button>
+            <button class="sleep-btn">😴 Schlafen</button>
+          `;
+          this.element.appendChild(controlsDiv);
+
+          // Event-Listener für die neuen Buttons hinzufügen
+          controlsDiv.querySelector(".feed-btn").addEventListener("click", () => this.eat());
+          controlsDiv.querySelector(".play-btn").addEventListener("click", () => this.play());
+          controlsDiv.querySelector(".sleep-btn").addEventListener("click", () => this.sleep());
+        }
+
+        // Verstecke den "Wiederbeleben"-Button
+        const reviveBtn = this.element.querySelector(".revive-btn");
+        if (reviveBtn) {
+          reviveBtn.style.display = "none";
+        }
+      }
+
+      this.updateUI(); // Aktualisiere die UI
+      this.startDecay(); // Starte den Verfall erneut
+    }
   }
 
   //NEU:
@@ -201,6 +288,11 @@ class Pet {
       this.energy = data.energy;
       this.hunger = data.hunger;
       this.happiness = data.happiness;
+
+      // Überprüfen, ob das Tier bereits gestorben ist
+      if (this.energy === 0) {
+        this.handleDeath();
+      }
     }
   }
 }
