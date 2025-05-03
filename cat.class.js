@@ -1,0 +1,1 @@
+class Cat extends Pet

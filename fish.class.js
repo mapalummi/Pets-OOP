@@ -1,0 +1,1 @@
+class Fish extends Pet
