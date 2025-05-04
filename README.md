@@ -1,6 +1,6 @@
-# Pets-OOP
+# Pets
 
-**Pets-OOP** ist eine moderne Hommage an die klassischen Tamagotchis! Mit diesem Programm kannst du digitale Haustiere pflegen, hegen und ihre Bedürfnisse erfüllen, um sie glücklich und gesund zu halten.
+**Pets** ist eine moderne Hommage an die klassischen Tamagotchis! Mit diesem Programm kannst du digitale Haustiere pflegen, hegen und ihre Bedürfnisse erfüllen, um sie glücklich und gesund zu halten.
 
 ## 🚀 Funktionen
 
